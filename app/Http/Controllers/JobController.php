@@ -86,5 +86,20 @@ class JobController extends Controller
             'filters' => $filters,
         ]);
     }
-}
 
+    /**
+     * Display a single published job.
+     */
+    public function show(Job $job)
+    {
+        if (! $job->published) {
+            abort(404);
+        }
+
+        $job->load('company');
+
+        return Inertia::render('Jobs/Show', [
+            'job' => $job,
+        ]);
+    }
+}

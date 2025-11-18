@@ -60,3 +60,40 @@ body {
     font-family: theme('fontFamily.sans');
   }
 }
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid theme('colors.ring');
+  outline-offset: 2px;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  /* Base surface + text */
+  --color-background: #ffffff;
+  --color-foreground: #020617;
+
+  /* Cards */
+  --color-card: #ffffff;
+  --color-card-foreground: #020617;
+
+  /* Muted surfaces (sidebar, subtle sections) */
+  --color-muted: #f3f4f6;
+  --color-muted-foreground: #4b5563;
+
+  /* Accent blocks (banners, highlights) */
+  --color-accent: #e0f2fe;
+  --color-accent-foreground: #0f172a;
+
+  /* Borders / inputs */
+  --color-border: #e5e7eb;
+  --color-input: #e5e7eb;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}

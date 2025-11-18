@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { JobCard } from '@/components/jobs/job-card';
@@ -56,11 +56,16 @@ export default function Index({ jobs, companies, filters }: Props) {
                 </div>
 
                 {jobs.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="space-y-4" aria-label="Job results">
                     {jobs.map((job) => (
-                      <div key={job.id}>
+                      <Link
+                        key={job.id}
+                        href={`/jobs/${job.id}`}
+                        className="block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                        aria-label={`View details for ${job.title} at ${job.company.name}`}
+                      >
                         <JobCard job={job} />
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 ) : (
@@ -94,4 +99,3 @@ export default function Index({ jobs, companies, filters }: Props) {
     </div>
   );
 }
-

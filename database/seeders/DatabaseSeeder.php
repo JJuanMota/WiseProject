@@ -18,8 +18,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@wisejobs.test',
+            'is_admin' => true,
+        ]);
+
+        User::factory()->create([
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'user@wisejobs.test',
+            'is_admin' => false,
         ]);
 
         $this->call([
