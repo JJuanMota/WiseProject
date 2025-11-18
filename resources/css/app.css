@@ -4,8 +4,59 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+@source '../**/*.ts';
+@source '../**/*.tsx';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+@theme inline {
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  
+  /* Primary brand color - Professional blue */
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
+  
+  /* Background colors */
+  --color-background: #0a0a0a;
+  --color-foreground: #ededed;
+  
+  /* Card colors */
+  --color-card: #111111;
+  --color-card-foreground: #ededed;
+  
+  /* Muted colors for secondary elements */
+  --color-muted: #1a1a1a;
+  --color-muted-foreground: #a3a3a3;
+  
+  /* Accent color */
+  --color-accent: #1e293b;
+  --color-accent-foreground: #f1f5f9;
+  
+  /* Border colors */
+  --color-border: #262626;
+  --color-input: #262626;
+  
+  /* Destructive/error colors */
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  
+  /* Ring color for focus states */
+  --color-ring: #3b82f6;
+  
+  /* Border radius */
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: theme('colors.border');
+}
+
+body {
+  background-color: theme('colors.background');
+  color: theme('colors.foreground');
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+@supports (font-variation-settings: normal) {
+  body {
+    font-family: theme('fontFamily.sans');
+  }
 }
