@@ -40,34 +40,35 @@ It allows users to browse and filter job postings, and provides an admin area to
 ### Getting started
 
 The project is configured to run on **Laravel Sail**.
-
-1. Copy `.env` if needed:
+1. Run `composer install`
+   
+2. Copy `.env` if needed:
 
    ```bash
    cp .env.example .env
    ```
 
-2. Start Docker containers:
+3. Start Docker containers:
 
    ```bash
    ./vendor/bin/sail up -d
    ```
 
-3. Run migrations and seeders:
+4. Run migrations and seeders:
 
    ```bash
    ./vendor/bin/sail artisan migrate --force
    ./vendor/bin/sail artisan db:seed
    ```
 
-4. Install frontend dependencies and start Vite:
+5. Install frontend dependencies and start Vite:
 
    ```bash
    ./vendor/bin/sail npm install
    ./vendor/bin/sail npm run dev
    ```
 
-5. Access the app:
+6. Access the app:
    - Public: `http://localhost/`
    - Admin login: `http://localhost/login`
    - Example credentials:
