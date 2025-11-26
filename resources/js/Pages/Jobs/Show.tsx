@@ -27,7 +27,7 @@ export default function Show({ job }: Props) {
               </button>
 
               <div className="rounded-lg border border-border bg-card p-4 md:p-6">
-                <JobCard job={job} />
+                <JobCard job={job} interactive={false} />
               </div>
             </div>
           </div>
@@ -73,4 +73,3 @@ export default function Show({ job }: Props) {
     </div>
   );
 }
-

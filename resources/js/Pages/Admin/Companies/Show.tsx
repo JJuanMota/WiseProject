@@ -97,10 +97,10 @@ export default function Show({ company, jobs }: Props) {
             ) : (
               <div className="space-y-4">
                 {jobs.map((job) => (
-                  <div
-                    key={job.id}
-                    className="group relative rounded-lg border border-border bg-card p-4"
-                  >
+                <div
+                  key={job.id}
+                  className="group relative rounded-lg border border-border bg-card p-4"
+                >
                     <div className="absolute right-4 top-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Link
                         href={`/admin/companies/${company.id}/jobs/${job.id}`}
@@ -122,7 +122,7 @@ export default function Show({ company, jobs }: Props) {
                         Delete
                       </button>
                     </div>
-                    <JobCard job={job} />
+                    <JobCard job={job} interactive={false} />
                   </div>
                 ))}
               </div>

@@ -13,8 +13,14 @@ class AuthController extends Controller
     /**
      * Show the login page.
      */
-    public function showLoginForm(): Response
+    public function showLoginForm(Request $request): Response|RedirectResponse
     {
+        if ($user = $request->user()) {
+            return $user->is_admin
+                ? redirect()->route('admin.companies.index')
+                : redirect()->route('jobs.index');
+        }
+
         return Inertia::render('Auth/Login');
     }
 
@@ -41,10 +47,10 @@ class AuthController extends Controller
         $user = $request->user();
 
         if ($user && $user->is_admin) {
-            return redirect()->intended('/admin/companies');
+            return redirect()->intended(route('admin.companies.index'));
         }
 
-        return redirect()->intended('/');
+        return redirect()->intended(route('jobs.index'));
     }
 
     /**
@@ -57,7 +63,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('jobs.index');
     }
 }
-

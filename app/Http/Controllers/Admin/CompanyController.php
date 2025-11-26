@@ -45,7 +45,9 @@ class CompanyController extends Controller
 
         Company::create($data);
 
-        return redirect('/admin/companies');
+        return redirect()
+            ->route('admin.companies.index')
+            ->with('success', 'Company created successfully.');
     }
 
     public function show(Company $company): Response
@@ -87,14 +89,17 @@ class CompanyController extends Controller
 
         $company->update($data);
 
-        return redirect('/admin/companies');
+        return redirect()
+            ->route('admin.companies.index')
+            ->with('success', 'Company updated successfully.');
     }
 
     public function destroy(Company $company): RedirectResponse
     {
         $company->delete();
 
-        return redirect('/admin/companies');
+        return redirect()
+            ->route('admin.companies.index')
+            ->with('success', 'Company deleted.');
     }
 }
-

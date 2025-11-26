@@ -26,12 +26,7 @@ function getInitialTheme(): Theme {
 }
 
 function useTheme(): [Theme, (theme: Theme) => void] {
-  const [theme, setTheme] = useState<Theme>('dark');
-
-  useEffect(() => {
-    const initial = getInitialTheme();
-    setTheme(initial);
-  }, []);
+  const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
 
   useEffect(() => {
     if (typeof document === 'undefined') {
@@ -52,8 +47,14 @@ function useTheme(): [Theme, (theme: Theme) => void] {
 export function Header({ isAdmin = false }: HeaderProps) {
   const page = usePage();
   const auth = (page.props as any).auth as { user?: { name: string; is_admin?: boolean } } | undefined;
+  const flash = (page.props as any).flash as { success?: string; error?: string } | undefined;
   const user = auth?.user;
   const isAdminUser = !!user?.is_admin;
+  const successMessage = flash?.success;
+  const errorMessage = flash?.error;
+  const [toast, setToast] = useState<{ type: 'success' | 'error'; text: string } | null>(
+    null,
+  );
 
   const [theme, setTheme] = useTheme();
 
@@ -64,6 +65,20 @@ export function Header({ isAdmin = false }: HeaderProps) {
   const handleLogout = () => {
     router.post('/logout');
   };
+
+  useEffect(() => {
+    if (successMessage) {
+      setToast({ type: 'success', text: successMessage });
+    } else if (errorMessage) {
+      setToast({ type: 'error', text: errorMessage });
+    }
+  }, [successMessage, errorMessage]);
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(null), 3500);
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -155,6 +170,19 @@ export function Header({ isAdmin = false }: HeaderProps) {
             )}
           </div>
         </div>
+        {toast && (
+          <div className="pb-3">
+            <div
+              className={`rounded-md border px-3 py-2 text-sm ${
+                toast.type === 'success'
+                  ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-800 dark:text-emerald-200'
+                  : 'border-destructive/60 bg-destructive/10 text-destructive'
+              }`}
+            >
+              {toast.text}
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

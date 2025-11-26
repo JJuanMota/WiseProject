@@ -227,7 +227,7 @@ export default function Edit({ company, job }: Props) {
                   disabled={processing}
                   className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-70"
                 >
-                  Save
+                  {processing ? 'Saving...' : 'Save'}
                 </button>
               </div>
             </form>

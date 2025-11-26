@@ -53,7 +53,30 @@ export default function Index({ company, jobs }: Props) {
             ) : (
               <div className="space-y-4">
                 {jobs.map((job) => (
-                  <JobCard key={job.id} job={job} />
+                  <div
+                    key={job.id}
+                    className="rounded-lg border border-border bg-card p-4"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1">
+                        <JobCard job={job} interactive={false} />
+                      </div>
+                      <div className="flex flex-col gap-2 text-xs">
+                        <Link
+                          href={`/admin/companies/${company.id}/jobs/${job.id}`}
+                          className="rounded-md border border-border px-2 py-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+                        >
+                          View
+                        </Link>
+                        <Link
+                          href={`/admin/companies/${company.id}/jobs/${job.id}/edit`}
+                          className="rounded-md border border-border px-2 py-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+                        >
+                          Edit
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             )}
@@ -65,4 +88,3 @@ export default function Index({ company, jobs }: Props) {
     </div>
   );
 }
-

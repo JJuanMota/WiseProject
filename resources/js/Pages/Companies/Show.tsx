@@ -72,7 +72,7 @@ export default function Show({ company, jobs }: Props) {
             {hasJobs ? (
               <div className="space-y-4">
                 {jobs.map((job) => (
-                  <JobCard key={job.id} job={job} />
+                  <JobCard key={job.id} job={job} interactive={false} />
                 ))}
               </div>
             ) : (
@@ -91,4 +91,3 @@ export default function Show({ company, jobs }: Props) {
     </div>
   );
 }
-

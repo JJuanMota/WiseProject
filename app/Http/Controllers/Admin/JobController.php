@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -35,7 +36,7 @@ class JobController extends Controller
 
     public function store(Request $request, Company $company): RedirectResponse
     {
-        $data = $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'location' => ['required', 'string', 'max:255'],
@@ -46,11 +47,24 @@ class JobController extends Controller
             'published' => ['sometimes', 'boolean'],
         ]);
 
+        $validator->after(function ($validator) use ($request) {
+            $min = $request->input('salary_min');
+            $max = $request->input('salary_max');
+
+            if ($min !== null && $max !== null && (int) $min > (int) $max) {
+                $validator->errors()->add('salary_min', 'Minimum salary cannot exceed maximum salary.');
+            }
+        });
+
+        $data = $validator->validate();
+
         $data['published'] = (bool) ($data['published'] ?? true);
 
         $company->jobs()->create($data);
 
-        return redirect("/admin/companies/{$company->id}");
+        return redirect()
+            ->route('admin.companies.show', $company)
+            ->with('success', 'Job created successfully.');
     }
 
     public function show(Company $company, Job $job): Response
@@ -87,7 +101,7 @@ class JobController extends Controller
             abort(404);
         }
 
-        $data = $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'location' => ['required', 'string', 'max:255'],
@@ -98,11 +112,24 @@ class JobController extends Controller
             'published' => ['sometimes', 'boolean'],
         ]);
 
+        $validator->after(function ($validator) use ($request) {
+            $min = $request->input('salary_min');
+            $max = $request->input('salary_max');
+
+            if ($min !== null && $max !== null && (int) $min > (int) $max) {
+                $validator->errors()->add('salary_min', 'Minimum salary cannot exceed maximum salary.');
+            }
+        });
+
+        $data = $validator->validate();
+
         $data['published'] = (bool) ($data['published'] ?? true);
 
         $job->update($data);
 
-        return redirect("/admin/companies/{$company->id}");
+        return redirect()
+            ->route('admin.companies.show', $company)
+            ->with('success', 'Job updated successfully.');
     }
 
     public function destroy(Company $company, Job $job): RedirectResponse
@@ -113,7 +140,8 @@ class JobController extends Controller
 
         $job->delete();
 
-        return redirect("/admin/companies/{$company->id}");
+        return redirect()
+            ->route('admin.companies.show', $company)
+            ->with('success', 'Job deleted.');
     }
 }
-

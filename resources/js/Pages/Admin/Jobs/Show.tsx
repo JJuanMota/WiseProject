@@ -60,7 +60,7 @@ export default function Show({ company, job }: Props) {
         <section className="py-8">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <div className="rounded-lg border border-border bg-card p-4">
-              <JobCard job={job} />
+              <JobCard job={job} interactive={false} />
             </div>
 
             <div className="rounded-lg border border-border bg-card p-4">

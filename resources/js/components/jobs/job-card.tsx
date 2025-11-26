@@ -2,9 +2,10 @@ import type { Job } from '@/types';
 
 interface JobCardProps {
   job: Job;
+  interactive?: boolean;
 }
 
-export function JobCard({ job }: JobCardProps) {
+export function JobCard({ job, interactive = true }: JobCardProps) {
   const formatSalary = (min?: number | null, max?: number | null) => {
     if (!min && !max) return null;
     if (min && max) return `$${min.toLocaleString()} - $${max.toLocaleString()}`;
@@ -15,8 +16,13 @@ export function JobCard({ job }: JobCardProps) {
   const salary = formatSalary(job.salary_min ?? undefined, job.salary_max ?? undefined);
 
   return (
-    <div className="block group cursor-pointer">
-      <article className="relative rounded-lg border border-border bg-card p-6 hover:border-primary/50 transition-all duration-200 hover:shadow-lg hover:shadow-primary/10">
+    <div className={interactive ? 'block group cursor-pointer' : 'block'}>
+      <article
+        className={[
+          'relative rounded-lg border border-border bg-card p-6 transition-all duration-200',
+          interactive ? 'hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10' : '',
+        ].join(' ')}
+      >
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex items-start gap-3 mb-3">
@@ -87,4 +93,3 @@ export function JobCard({ job }: JobCardProps) {
     </div>
   );
 }
-
